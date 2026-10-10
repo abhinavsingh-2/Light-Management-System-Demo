@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>SmartSpace 3D</title>
+    <meta name="description" content="Interactive 3D building visualizer with room climate monitoring, occupancy sensors, and Niagara BMS controls." />
+    <meta property="og:title" content="SmartSpace 3D" />
+    <meta property="og:description" content="Interactive 3D building visualizer with room climate monitoring, occupancy sensors, and Niagara BMS controls." />
+    <meta property="og:type" content="website" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <link rel="manifest" href="/manifest.json" />
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <!-- Niagara RequireJS & Baja fallback -->
+    <script>
+        if (typeof window.require === 'undefined') {
+            window.require = function (deps, callback) {
+                console.log("[Niagara] Running in preview mode (standalone)");
+                if (typeof callback === 'function') {
+                    const mockBaja = {
+                        Subscriber: function () {
+                            return {
+                                unsubscribeAll: function () {},
+                                attach: function () {}
+                            };
+                        },
+                        Ord: {
+                            make: function (ord) {
+                                return {
+                                    get: function () {
+                                        return Promise.resolve({
+                                            getOut: function () {
+                                                return {
+                                                    get: function (prop) { return false; },
+                                                    getStatus: function () { return { toString: () => "ok" }; },
+                                                    getFacets: function () { return null; }
+                                                };
+                                            },
+                                            attach: function () {},
+                                            setOut: function () {}
+                                        });
+                                    }
+                                };
+                            }
+                        }
+                    };
+                    try { callback(mockBaja); } catch (e) { console.warn(e); }
+                }
+            };
+        }
+    </script>
+
+    <script>
+        require(["baja!"], function (baja) {
+            console.log("🔥 Niagara TEMP Sensor Bridge Loaded");
+            const subscriber = new baja.Subscriber();
+            const active = {};
+            window.__niagaraTempCache = window.__niagaraTempCache || {};
+
+            const SENSOR_TEMP_MAP = {
+                Sensor189: "station:|slot:/LMS",
+                Sensor072: "station:|slot:/temp",
+            };
+
+            function subscribeSensor(sensorId, ord) {
+                if (active[ord]) return;
+                baja.Ord.make(ord).get({ subscriber })
+                    .then(point => {
+                        const send = () => {
+                            const out = point.getOut();
+                            if (!out) return;
+                            let value = null;
+                            let status = "";
+                            let unit = "";
+                            try { value = out.get("value"); } catch (e) { }
+                            try { status = out.getStatus()?.toString() || ""; } catch (e) { }
+                            try {
+                                const facets = out.getFacets?.();
+                                if (facets?.get) {
+                                    unit = facets.get("units") || facets.get("unit") || "";
+                                }
+                            } catch (e) { }
+
+                            window.__niagaraTempCache[sensorId] = { value, unit, status, ts: Date.now() };
+                            window.dispatchEvent(
+                                new CustomEvent("niagara-temp-sensor-update", {
+                                    detail: { sensorId, value, unit, status, ts: Date.now() }
+                                })
+                            );
+                        };
+                        send();
+                        point.attach("changed", p => {
+                            if (p.getName() === "out") send();
+                        });
+                        active[ord] = point;
+                    })
+                    .catch(err => console.warn("Niagara temp subscribe note:", sensorId, err));
+            }
+
+            function activateTempSensors() {
+                subscriber.unsubscribeAll();
+                Object.keys(active).forEach(k => delete active[k]);
+                Object.entries(SENSOR_TEMP_MAP).forEach(
+                    ([sensorId, ord]) => subscribeSensor(sensorId, ord)
+                );
+            }
+
+            setTimeout(activateTempSensors, 800);
+            window.addEventListener("beforeunload", () => subscriber.unsubscribeAll());
+        });
+    </script>
+
+    <script>
+        require(["baja!"], function (baja) {
+            console.log("🔥 AUTO MODE BOOLEAN BRIDGE STARTED");
+            const AUTO_MODE_ORD = "station:|slot:/sensorpoint1";
+            let autoPoint = null;
+            const subscriber = new baja.Subscriber();
+
+            function subscribeAutoMode() {
+                baja.Ord.make(AUTO_MODE_ORD).get({ subscriber }).then(point => {
+                    autoPoint = point;
+                    const send = () => {
+                        const out = point.getOut();
+                        if (!out) return;
+                        let boolVal = false;
+                        try {
+                            const raw = out.get("value");
+                            boolVal = raw === true;
+                        } catch (err) {}
+                        try {
+                            if (window.top && window.top.setAutoModeFromNiagara) {
+                                window.top.setAutoModeFromNiagara(boolVal);
+                            }
+                        } catch (e) {}
+
+                        window.dispatchEvent(
+                            new CustomEvent("niagara-auto-mode-update", {
+                                detail: { value: boolVal }
+                            })
+                        );
+                    };
+                    send();
+                    point.attach("changed", prop => {
+                        if (prop.getName() === "out") send();
+                    });
+                }).catch(err => console.warn("AutoMode ORD note:", err));
+            }
+
+            subscribeAutoMode();
+
+            window.addEventListener("niagara-write-auto-mode", function (e) {
+                if (!autoPoint) return;
+                const value = e.detail.value === true;
+                try {
+                    autoPoint.setOut(value);
+                } catch (err) {
+                    console.warn("Write AutoMode note:", err);
+                }
+            });
+
+            window.addEventListener("beforeunload", () => subscriber.unsubscribeAll());
+        });
+    </script>
+
+    <script type="module" src="/src/index.jsx"></script>
+</body>
+
+</html>

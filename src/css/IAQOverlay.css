@@ -1,0 +1,109 @@
+/* ===============================
+   INDUSTRIAL 3D LABEL CARD
+=============================== */
+
+.iaq-card-anchor {
+    transform: translateX(-50%);
+}
+
+/* Card body */
+.iaq-card-white {
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 22px 24px;
+    min-width: 120px;
+
+    /* Strong physical presence */
+    border: 1px solid #dcdcdc;
+    box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.35);
+
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    color: #111;
+    text-align: left;
+    white-space: nowrap;
+
+    /* Animation */
+    animation: cardAppear 0.12s ease-out forwards;
+}
+
+/* ===============================
+   TEXT HIERARCHY (VERY IMPORTANT)
+=============================== */
+
+.iaq-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.iaq-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+    line-height: 1.1;
+}
+
+.iaq-sub {
+    font-size: 10px;
+    color: #666;
+    margin-top: 2px;
+}
+
+/* ===============================
+   ENTRY ANIMATION (SUBTLE)
+=============================== */
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(2px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+.iaq-values {
+    margin-top: 6px;
+}
+
+.iaq-row {
+    display: grid;
+    grid-template-columns: 20px auto 1fr;
+    align-items: center;
+    column-gap: 6px;
+}
+
+.iaq-icon {
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.iaq-label {
+    font-size: 0.75em;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.iaq-value {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #000000;
+    text-align: right;
+}
+
+
+
+.iaq-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+   filter: brightness(0) saturate(100%) invert(95%);
+}
+

@@ -1,0 +1,114 @@
+.glass-card {
+    padding: 20px;
+    border-radius: 16px;
+    min-width: 240px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    pointer-events: auto;
+    user-select: none;
+    position: absolute;
+}
+
+
+.temptoggle {
+    top: 150px;
+    right: 40px;
+}
+
+
+.sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.slider-container {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
+    align-items: center;
+}
+
+.slider-title-label {
+    font-size: 16px;
+    color: #000000 !important;
+}
+
+.temperature-switch {
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 33px;
+    margin-left: auto;
+}
+
+.temperature-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.temperature-slider {
+    position: absolute;
+    cursor: pointer;
+    background-color: #333;
+    border-radius: 34px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.4s;
+}
+
+.temperature-slider .icon {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.temperature-slider .icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.temp-off-icon svg path {
+    fill: #888 !important;
+    stroke: #888 !important;
+}
+
+.temp-on-icon svg path {
+    fill: #fff !important;
+    stroke: #fff !important;
+}
+
+.temperature-slider::before {
+    content: "";
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background: linear-gradient(to bottom, #cccccc, #888888);
+    border-radius: 50%;
+    transition: transform 0.4s ease, background 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.temperature-switch input:checked+.temperature-slider {
+    background-color: #ccc;
+}
+
+.temperature-switch input:checked+.temperature-slider::before {
+    transform: translateX(36px);
+    background: linear-gradient(0deg, #f857a6 0%, #ff5858 100%);
+}

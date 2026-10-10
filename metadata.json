@@ -1,0 +1,6 @@
+{
+  "name": "SmartSpace 3D",
+  "description": "Interactive 3D building visualizer with room climate monitoring, occupancy sensors, and Niagara BMS controls.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

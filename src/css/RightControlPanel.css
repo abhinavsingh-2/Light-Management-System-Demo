@@ -1,0 +1,439 @@
+/* ===============================
+   SECTION
+=============================== */
+
+.control-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ===============================
+   TOGGLE ROW
+=============================== */
+
+.toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+    letter-spacing: 0.3px;
+}
+
+/* ===============================
+   SWITCH BASE
+=============================== */
+
+.switch {
+    position: relative;
+    width: 46px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Track (OFF) */
+.slider {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.18);
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+/* Knob OFF */
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    top: 3px;
+
+    border-radius: 50%;
+    background: #f1f1f1;
+
+    transition: 0.25s ease;
+
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ===============================
+   ON STATE – IMAGE MATCHED GRADIENT
+=============================== */
+
+.switch input:checked+.slider {
+    background: linear-gradient(135deg,
+            #ff3d81 0%,
+            /* hot pink */
+            #ff5f6d 45%,
+            /* coral */
+            #ff8a3d 100%
+            /* orange */
+        ) !important;
+
+    box-shadow:
+        0 0 14px rgba(255, 120, 120, 0.85),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Knob ON */
+.switch input:checked+.slider::before {
+    transform: translateX(22px);
+
+    background: radial-gradient(circle at 30% 30%,
+            #ffffff,
+            #ffd6c2) !important;
+
+    box-shadow:
+        0 0 12px rgba(255, 140, 61, 0.9),
+        0 3px 10px rgba(0, 0, 0, 0.6) !important;
+}
+
+
+
+
+
+
+/* ===============================
+   SEPARATE LEGEND GLASS CARD
+=============================== */
+
+.legend-panel {
+    position: relative;
+    width: 100%;
+    background: rgba(90, 90, 90, 0.35);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 14px;
+    padding: 12px 14px;
+    animation: fadeSlide 0.25s ease-out;
+}
+
+/* ===============================
+   LEGEND HEADER
+=============================== */
+
+.legend-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 10px;
+    letter-spacing: 0.4px;
+    opacity: 0.9;
+}
+
+/* ===============================
+   STACKED CO₂ LEGEND
+=============================== */
+
+.legend-stack {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.legend-stack-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #000;
+}
+
+.legend-stack-label {
+    font-weight: 700;
+}
+
+.legend-stack-range {
+    font-size: 11px;
+    opacity: 0.85;
+}
+
+/* ===============================
+   SIMPLE LEGEND ROW (TEMP/HUM)
+=============================== */
+
+.legend-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 12px;
+    color: #ffffff;
+    margin: 6px 0;
+}
+
+.legend-label {
+    flex: 1;
+    margin-left: 8px;
+    opacity: 0.85;
+}
+
+.legend-value {
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+}
+
+/* ===============================
+   ANIMATION
+=============================== */
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ===============================
+   FLOOR SELECTOR PANEL
+=============================== */
+.floor-panel {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1200;
+    /* above canvas */
+}
+
+/* ===============================
+   FLOOR BOX
+=============================== */
+.floor-box {
+    width: 80px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s ease;
+}
+
+.floor-box span {
+    font-size: 10px;
+    font-weight: normal;
+    opacity: 0.7;
+    line-height: 1;
+}
+
+/* Hover */
+.floor-box:hover {
+    transform: scale(1.08);
+    background: rgba(249, 28, 144, 0.15);
+}
+
+/* Active */
+.floor-box.active {
+    background: linear-gradient(135deg, #f91c90, #870047);
+    color: #fff;
+    border-color: #870047;
+}
+
+
+
+/* ===============================
+   CO₂ LEGEND – CENTER TEXT ONLY
+=============================== */
+/* Center-only legend rows (CO2 + Temp/Humidity) */
+.legend-stack-row.center-only {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px;
+}
+
+/* Range text centered */
+.legend-stack-row.center-only .legend-stack-range {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* RIGHT SIDE FLOATING STACK - CENTERED & COMPACT */
+.right-control-wrapper {
+  position: fixed;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+}
+
+/* 🔒 PANEL CONTENT */
+.control-panel {
+  width: 100%;
+  background: rgba(90, 90, 90, 0.35);
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* FIXED SECTION (Toggles) */
+.fixed-section {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* SCROLL SECTION (Meeting rooms) */
+.scroll-section {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+/* 🔑 SHOW ONLY 2 TO 3 ROOMS (SCROLLABLE) */
+.rooms-scroll {
+  max-height: 126px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Scrollbar styling */
+.rooms-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.rooms-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 5px;
+}
+
+/* 🔑 FORCE ROOMS TO STACK VERTICALLY */
+.radio-row {
+  display: flex;          /* keeps radio + label aligned */
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 10px;    /* spacing between rooms */
+  white-space: nowrap;    /* prevents wrapping weirdness */
+}
+
+
+/* SMALL TABS */
+.small-tabs {
+  display: flex;
+  background: #f3f2f2;
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+
+.small-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #9a9a9a;
+  font-size: 12px;
+  padding: 6px 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.small-tab.active {
+  background: #aeaeae;
+  color: #860046;
+  font-weight: 600;
+
+  background: rgba(90, 90, 90, 0.35);
+  backdrop-filter: blur(14px);
+ 
+}
+.tab-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+/* 🔼 Phase row slightly distinct */
+.small-tabs > div:first-child {
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15); /* subtle divider */
+}
+
+/* Optional: make phase buttons slightly softer */
+.small-tabs > div:first-child .small-tab {
+  opacity: 0.85;
+  transform: scale(0.96);
+}
+
+/* Keep hover clean */
+.small-tabs > div:first-child .small-tab:hover {
+  opacity: 1;
+}
+
+/* Add separator between Phase buttons */
+.small-tabs > div:first-child .small-tab:first-child {
+  position: relative;
+}
+
+.small-tabs > div:first-child .small-tab:first-child::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+}
+
+

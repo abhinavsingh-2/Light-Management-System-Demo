@@ -1,0 +1,70 @@
+.bottom-control-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px 16px;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+/* MAIN GRID — this is the key */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 6fr 2fr 4fr 2fr;
+  gap: 16px;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Column wrappers */
+.dashboard-col {
+  display: flex;
+  height: 100%;
+}
+
+.dashboard-col>* {
+  flex: 1;
+}
+
+/* Optional fine tuning */
+.dashboard-col.narrow {
+  max-width: 220px;
+}
+
+.dashboard-col.wide {
+  min-width: 320px;
+}
+
+.bottom-control-panel {
+  position: relative;
+  /* ⬅ remove absolute */
+  margin-top: 24px;
+  padding-bottom: 24px;
+}
+
+.bottom-control-panel {
+  margin-top: 0;
+  /* remove gap */
+  padding-top: 8px;
+  /* small breathing space */
+}
+
+.bottom-control-panel {
+  position: sticky;
+  bottom: -330px;
+  /* 👈 controls how much is visible */
+  z-index: 10;
+}

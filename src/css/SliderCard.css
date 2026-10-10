@@ -1,0 +1,53 @@
+.single-slider-card {
+    border-radius: 0px;
+    background: #fff;
+}
+
+.slider-label {
+    font-size: 11px;
+    color: #0066ff;
+    white-space: nowrap;
+}
+
+.slider-value {
+    font-weight: 700;
+    font-size: 14px;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Blue gradient track */
+.custom-range::-webkit-slider-runnable-track {
+    height: 6px;
+    background: linear-gradient(to right, #bbb, #0066ff);
+    border-radius: 5px;
+}
+
+.custom-range::-webkit-slider-thumb {
+    background: #fff;
+    border: 2px solid #0066ff;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 16px;
+    width: 16px;
+    margin-top: -5px;
+    -webkit-appearance: none;
+}
+
+.custom-range:focus {
+    outline: none;
+}
+
+/* Special gradient for temperature */
+.temp-range::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #ffe289, #d3f1ff);
+}
+
+/* Tooltip mimic (optional, can be hidden unless hovered) */
+.hover-legend {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    font-size: 11px;
+    color: #555;
+}

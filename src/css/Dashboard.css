@@ -1,0 +1,18 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 3.2fr 2fr 2fr 1.4fr 3.4fr;
+  gap: 16px;
+  align-items: stretch;
+  padding: 12px;
+}
+
+/* force equal height columns */
+.dashboard-grid > * {
+  height: 100%;
+  display: flex;
+}
+
+/* make inner cards stretch */
+.dashboard-grid > * > * {
+  flex: 1;
+}

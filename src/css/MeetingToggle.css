@@ -1,0 +1,123 @@
+.meeting-switch {
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 34px;
+    margin-left: auto;
+}
+
+.meeting-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.meeting-slider {
+    position: absolute;
+    cursor: pointer;
+    background-color: #333;
+    border-radius: 34px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.4s;
+}
+
+.meeting-slider .icon {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.meeting-slider .icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.meeting-off-icon svg path {
+    fill: #888 !important;
+    stroke: #888 !important;
+}
+
+.meeting-off-icon svg line {
+    stroke: #888 !important;
+}
+
+.meeting-on-icon svg path {
+    fill: #fff !important;
+    stroke: #fff !important;
+}
+
+.meeting-slider::before {
+    content: "";
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background: linear-gradient(to bottom, #cccccc, #888888);
+    border-radius: 50%;
+    transition: transform 0.4s ease, background 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.meeting-switch input:checked+.meeting-slider {
+    background-color: #ccc;
+}
+
+.meeting-switch input:checked+.meeting-slider::before {
+    transform: translateX(36px);
+    background: #1488cc;
+    background: -webkit-linear-gradient(0deg, #1488cc 0%, #2b32b2 100%);
+    background: linear-gradient(0deg, #1488cc 0%, #2b32b2 100%);
+}
+
+
+
+
+.glass-card {
+    padding: 20px;
+    border-radius: 16px;
+    min-width: 240px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    pointer-events: auto;
+    user-select: none;
+    position: absolute;
+}
+
+
+.meetingroomtoggle {
+    top: 200px;
+    right: 40px;
+}
+
+
+.sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.slider-container {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
+    align-items: center;
+}
+
+.slider-title-label {
+    font-size: 16px;
+    color: rgba(0, 123, 255, 1);
+}
